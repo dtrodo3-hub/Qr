@@ -1,66 +1,96 @@
-<div id="login" style="display:flex; height:100vh; align-items:center; justify-content:center; flex-direction:column;">
-  <h2>비밀번호 입력</h2>
-  <input type="password" id="pw" placeholder="비밀번호" style="padding:10px; font-size:16px;">
-  <button onclick="checkPw()" style="margin-top:10px; padding:10px;">확인</button>
-</div>
-
-<div id="content" style="display:none;">
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
- <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>업체 전체 연락처</title>
+
 <style>
-  * { box-sizing: border-box; }
-  body { margin:0; font-family: Arial, "Malgun Gothic", sans-serif; background:#f4f7fb; color:#1f2937; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 20px 14px 40px; }
-  h1 { margin:0 0 8px; font-size: 28px; }
-  .desc { color:#4b5563; line-height:1.6; margin-bottom: 16px; }
-  .topbar {
-    position: sticky; top:0; z-index:10; background:#f4f7fb; padding: 12px 0 14px;
-  }
-  .search {
-    width:100%; padding:14px 16px; border-radius:14px; border:1px solid #d1d5db; background:white; font-size:16px;
-  }
-  .count { margin:10px 2px 0; color:#6b7280; font-size:14px; }
-  .list { display:grid; gap:12px; margin-top:16px; }
-  .card {
-    background:white; border-radius:18px; padding:16px; box-shadow:0 6px 20px rgba(0,0,0,0.06);
-    display:flex; justify-content:space-between; gap:12px; align-items:center;
-  }
-  .name { font-size:20px; font-weight:700; margin-bottom:6px; }
-  .phone { font-size:18px; font-weight:700; margin-bottom:6px; }
-  .sub { color:#6b7280; line-height:1.5; }
-  .btn {
-    display:inline-block; padding:12px 16px; border-radius:12px; background:#2563eb; color:white;
-    text-decoration:none; font-weight:700; white-space:nowrap;
-  }
-  .notice {
-    margin-top: 18px; padding: 14px 16px; background:#fff7ed; border:1px solid #fed7aa; border-radius:14px; color:#9a3412; line-height:1.6;
-  }
-  @media (max-width:640px) {
-    .card { flex-direction:column; align-items:flex-start; }
-    .right { width:100%; }
-    .btn { display:block; width:100%; text-align:center; }
-  }
+* { box-sizing: border-box; }
+body { margin:0; font-family: Arial, "Malgun Gothic", sans-serif; background:#f4f7fb; color:#1f2937; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 20px 14px 40px; }
+h1 { margin:0 0 8px; font-size: 28px; }
+.desc { color:#4b5563; line-height:1.6; margin-bottom: 16px; }
+
+.topbar {
+  position: sticky; top:0; z-index:10; background:#f4f7fb; padding: 12px 0 14px;
+}
+
+.search {
+  width:100%; padding:14px 16px; border-radius:14px; border:1px solid #d1d5db; background:white; font-size:16px;
+}
+
+.count { margin:10px 2px 0; color:#6b7280; font-size:14px; }
+
+.list { display:grid; gap:12px; margin-top:16px; }
+
+.card {
+  background:white; border-radius:18px; padding:16px; box-shadow:0 6px 20px rgba(0,0,0,0.06);
+  display:flex; justify-content:space-between; gap:12px; align-items:center;
+}
+
+.name { font-size:20px; font-weight:700; margin-bottom:6px; }
+.phone { font-size:18px; font-weight:700; margin-bottom:6px; }
+.sub { color:#6b7280; }
+
+.btn {
+  display:inline-block; padding:12px 16px; border-radius:12px; background:#2563eb; color:white;
+  text-decoration:none; font-weight:700;
+}
+
+/* 로그인 화면 */
+#login {
+  display:flex;
+  height:100vh;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+}
+
+#login input {
+  padding:10px;
+  font-size:16px;
+  margin-top:10px;
+}
+
+#login button {
+  margin-top:10px;
+  padding:10px 20px;
+}
+
+@media (max-width:640px) {
+  .card { flex-direction:column; align-items:flex-start; }
+  .btn { width:100%; text-align:center; }
+}
 </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <h1>업체 전체 연락처</h1>
-      <div class="desc">업체명, 담당자, 설비명으로 검색할 수 있고, 버튼을 누르면 바로 전화가 걸립니다.</div>
-      <input id="search" class="search" type="text" placeholder="업체명 / 담당자 / 설비명 검색" />
-      <div id="count" class="count">총 71건</div>
-    </div>
-    <div id="list" class="list">
-      
-    <div class="card" data-search="현대오토에버 최규현 총괄 trs/방송/열차무선 01099968907">
+
+<!-- 🔐 로그인 -->
+<div id="login">
+  <h2>비밀번호 입력</h2>
+  <input type="password" id="pw" placeholder="비밀번호">
+  <button onclick="checkPw()">확인</button>
+</div>
+
+<!-- 📞 본문 -->
+<div id="content" style="display:none;">
+
+<div class="wrap">
+  <div class="topbar">
+    <h1>업체 전체 연락처</h1>
+    <div class="desc">검색 후 버튼 누르면 바로 전화 연결됩니다.</div>
+    <input id="search" class="search" type="text" placeholder="검색">
+    <div id="count" class="count">총 71건</div>
+  </div>
+
+  <div id="list" class="list">
+
+   <div class="card" data-search="현대오토에버 최규현 총괄 trs/방송/열차무선 01099968907">
       <div class="left">
         <div class="name">현대오토에버</div>
         <div class="phone">01099968907</div>
@@ -842,35 +872,17 @@
         <a class="btn" href="tel:01035187475">전화걸기</a>
       </div>
     </div>
-    
-    </div>
-    <div class="notice">
-      이 페이지 자체는 준비되어 있습니다. 다만 <b>QR을 찍었을 때 이 페이지가 바로 열리게 하려면 이 HTML 파일이 인터넷에서 열리는 주소(URL)</b>가 있어야 합니다.
-      주소가 생기면 그 URL로 연결되는 QR 코드를 바로 만들 수 있습니다.
-    </div>
-  </div>
-<script>
-const search = document.getElementById('search');
-const cards = Array.from(document.querySelectorAll('.card'));
-const count = document.getElementById('count');
 
-function runFilter() {
-  const q = search.value.trim().toLowerCase();
-  let visible = 0;
-  cards.forEach(card => {
-    const ok = !q || card.dataset.search.includes(q);
-    card.style.display = ok ? 'flex' : 'none';
-    if (ok) visible++;
-  });
-  count.textContent = `검색 결과 ${visible}건 / 전체 71건`;
-}
-search.addEventListener('input', runFilter);
-</script>
-</body>
-</html>
+
+   
+
+  </div>
+</div>
+
 </div>
 
 <script>
+// 🔐 로그인
 function checkPw() {
   const password = "1234";
   const input = document.getElementById("pw").value;
@@ -882,4 +894,25 @@ function checkPw() {
     alert("비밀번호 틀림");
   }
 }
+
+// 🔍 검색
+const search = document.getElementById('search');
+const cards = document.querySelectorAll('.card');
+const count = document.getElementById('count');
+
+search.addEventListener('input', function () {
+  const q = this.value.toLowerCase();
+  let visible = 0;
+
+  cards.forEach(card => {
+    const ok = card.dataset.search.toLowerCase().includes(q);
+    card.style.display = ok ? 'flex' : 'none';
+    if (ok) visible++;
+  });
+
+  count.textContent = `검색 결과 ${visible}건`;
+});
 </script>
+
+</body>
+</html>
