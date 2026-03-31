@@ -1,3 +1,11 @@
+<div id="login" style="display:flex; height:100vh; align-items:center; justify-content:center; flex-direction:column;">
+  <h2>비밀번호 입력</h2>
+  <input type="password" id="pw" placeholder="비밀번호" style="padding:10px; font-size:16px;">
+  <button onclick="checkPw()" style="margin-top:10px; padding:10px;">확인</button>
+</div>
+
+<div id="content" style="display:none;">
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -860,3 +868,18 @@ search.addEventListener('input', runFilter);
 </script>
 </body>
 </html>
+</div>
+
+<script>
+function checkPw() {
+  const password = "1234";
+  const input = document.getElementById("pw").value;
+
+  if (input === password) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("content").style.display = "block";
+  } else {
+    alert("비밀번호 틀림");
+  }
+}
+</script>
